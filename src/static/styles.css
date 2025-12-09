@@ -267,6 +267,64 @@ section h3 {
   align-items: center;
 }
 
+/* Share buttons */
+.share-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-button {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.share-button:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.share-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Specific share button styles */
+.share-twitter:hover {
+  background-color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.share-facebook:hover {
+  background-color: #1877f2;
+  border-color: #1877f2;
+}
+
+.share-email:hover {
+  background-color: #ea4335;
+  border-color: #ea4335;
+}
+
+.share-copy:hover {
+  background-color: #5f6368;
+  border-color: #5f6368;
+}
+
 /* Buttons */
 .register-button {
   background: linear-gradient(145deg, var(--secondary), var(--secondary-dark));
