@@ -500,6 +500,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
 
+    // Prepare HTML-encoded data for share buttons
+    const encodedDescription = details.description.replace(/"/g, '&quot;');
+    const encodedSchedule = formattedSchedule.replace(/"/g, '&quot;');
+
     // Create activity tag
     const tagHtml = `
       <span class="activity-tag" style="background-color: ${typeInfo.color}; color: ${typeInfo.textColor}">
@@ -554,19 +558,19 @@ document.addEventListener("DOMContentLoaded", () => {
         </ul>
       </div>
       <div class="share-buttons">
-        <button class="share-button share-twitter tooltip" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" data-schedule="${formattedSchedule.replace(/"/g, '&quot;')}" aria-label="Share on Twitter">
+        <button class="share-button share-twitter tooltip" data-activity="${name}" data-description="${encodedDescription}" data-schedule="${encodedSchedule}" aria-label="Share on Twitter">
           <span class="share-icon">🐦</span>
           <span class="tooltip-text">Share on Twitter</span>
         </button>
-        <button class="share-button share-facebook tooltip" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" data-schedule="${formattedSchedule.replace(/"/g, '&quot;')}" aria-label="Share on Facebook">
+        <button class="share-button share-facebook tooltip" data-activity="${name}" data-description="${encodedDescription}" data-schedule="${encodedSchedule}" aria-label="Share on Facebook">
           <span class="share-icon">📘</span>
           <span class="tooltip-text">Share on Facebook</span>
         </button>
-        <button class="share-button share-email tooltip" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" data-schedule="${formattedSchedule.replace(/"/g, '&quot;')}" aria-label="Share via Email">
+        <button class="share-button share-email tooltip" data-activity="${name}" data-description="${encodedDescription}" data-schedule="${encodedSchedule}" aria-label="Share via Email">
           <span class="share-icon">✉️</span>
           <span class="tooltip-text">Share via Email</span>
         </button>
-        <button class="share-button share-copy tooltip" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" data-schedule="${formattedSchedule.replace(/"/g, '&quot;')}" aria-label="Copy link">
+        <button class="share-button share-copy tooltip" data-activity="${name}" data-description="${encodedDescription}" data-schedule="${encodedSchedule}" aria-label="Copy link">
           <span class="share-icon">🔗</span>
           <span class="tooltip-text">Copy shareable link</span>
         </button>
@@ -833,7 +837,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Create shareable content
     const shareText = `Check out "${activityName}" at Mergington High School! ${description} Schedule: ${schedule}`;
-    const shareUrl = window.location.href;
+    // Use origin + pathname to avoid query parameters and fragments
+    const shareUrl = window.location.origin + window.location.pathname;
     
     // Determine share type based on button class
     if (button.classList.contains('share-twitter')) {
@@ -862,7 +867,8 @@ document.addEventListener("DOMContentLoaded", () => {
           showMessage('Failed to copy link', 'error');
         });
       } else {
-        // Fallback for older browsers
+        // Fallback for older browsers using deprecated execCommand API
+        // Note: document.execCommand('copy') is deprecated but kept for legacy browser support
         const textArea = document.createElement('textarea');
         textArea.value = textToCopy;
         textArea.style.position = 'fixed';
